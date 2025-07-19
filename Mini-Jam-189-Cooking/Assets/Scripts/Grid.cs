@@ -40,12 +40,12 @@ public class Grid
         return x >= 0 && x < width && y >= 0 && y < height;
     }
 
-    private Vector3 GetWorldPosition(int x, int y)
+    public Vector3 GetWorldPosition(int x, int y)
     {
         return new Vector3(x, y) * cellSize + originPosition;
     }
 
-    private void GetXY(Vector3 worldPosition, out int x, out int y)
+    public void GetXY(Vector3 worldPosition, out int x, out int y)
     {
         x = Mathf.FloorToInt((worldPosition-originPosition).x / cellSize);
         y = Mathf.FloorToInt((worldPosition-originPosition).y / cellSize);
