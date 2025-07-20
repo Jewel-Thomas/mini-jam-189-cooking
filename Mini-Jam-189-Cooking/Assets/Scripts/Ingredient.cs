@@ -8,7 +8,8 @@ public class Ingredient : MonoBehaviour
     public int decayTime = 10;
     public IngredientManager ingredientManager;
     public DishManager dishManager;
-    public Vector2Int gridCell; // Set this when spawning the ingredient
+    public Vector2Int gridCell;
+    public Sprite ingredientSprite;
 
     void Start()
     {

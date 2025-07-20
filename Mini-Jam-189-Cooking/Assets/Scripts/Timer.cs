@@ -3,6 +3,12 @@ using TMPro;
 
 public class Timer : MonoBehaviour
 {
+    // Set the timer value and update the display immediately
+    public void SetTime(float duration)
+    {
+        timeLeft = duration;
+        timerText.text = "RoundTime : " + Mathf.Ceil(timeLeft).ToString();
+    }
     public float timeLeft;
     public bool isRunning = false;
     public TextMeshProUGUI timerText;
@@ -13,7 +19,7 @@ public class Timer : MonoBehaviour
         if (!isRunning) return;
 
         timeLeft -= Time.deltaTime;
-        timerText.text = Mathf.Ceil(timeLeft).ToString();
+        timerText.text = "RoundTime : " + Mathf.Ceil(timeLeft).ToString();
 
         if (timeLeft <= 0)
         {

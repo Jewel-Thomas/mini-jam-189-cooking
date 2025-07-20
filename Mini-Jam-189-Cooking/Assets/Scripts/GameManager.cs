@@ -26,8 +26,10 @@ public class GameManager : MonoBehaviour
 
     public void StartNewRound()
     {
+        // Reset ingredients and timer UI for new round
         List<string> newDish = DishDatabase.GetRandomDish();
         dishManager.SetNewDish(newDish);
+        roundTimer.SetTime(roundDuration);
         roundTimer.StartTimer(roundDuration, OnRoundTimerEnd);
     }
 
@@ -43,6 +45,10 @@ public class GameManager : MonoBehaviour
         currentHour += success ? 1 : -1;
         UpdateTimeDisplay();
 
+        // Remove immediate reset here
+        // dishManager.ResetDish();
+        // roundTimer.SetTime(roundDuration);
+
         if (currentHour >= 19) WinGame();
         else if (currentHour < 10) LoseGame();
         else Invoke(nameof(StartNewRound), 1.5f);
@@ -50,7 +56,7 @@ public class GameManager : MonoBehaviour
 
     void UpdateTimeDisplay()
     {
-        timeDisplay.text = currentHour + ":00";
+        timeDisplay.text = "Day Hour : " + currentHour + ":00";
     }
 
     void WinGame() { /* Show win screen */ }

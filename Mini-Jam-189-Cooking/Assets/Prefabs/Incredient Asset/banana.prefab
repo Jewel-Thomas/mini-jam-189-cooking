@@ -104,6 +104,7 @@ MonoBehaviour:
   ingredientManager: {fileID: 0}
   dishManager: {fileID: 0}
   gridCell: {x: 0, y: 0}
+  ingredientSprite: {fileID: -9182177788924653191, guid: 35b418672407f44419027b0d3369474f, type: 3}
 --- !u!50 &4217351690691028466
 Rigidbody2D:
   serializedVersion: 5
