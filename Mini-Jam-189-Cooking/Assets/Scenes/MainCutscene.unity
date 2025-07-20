@@ -1051,7 +1051,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueText: {fileID: 1949925117}
-  dialogueContent: Working late, trying all kinds of ingridients to make new dishes
+  dialogueContent: Working late, trying all kinds of ingredients to make new dishes
     for Mr.Clock
   totalTypingDuration: 3.5
 --- !u!114 &709760723
