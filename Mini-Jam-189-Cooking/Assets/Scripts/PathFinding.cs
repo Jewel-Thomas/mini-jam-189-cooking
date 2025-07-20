@@ -1,22 +1,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteAlways]
 public class PathFinding : MonoBehaviour
 {
+    public ChefMover chefMover; // Assign in Inspector
     public int width = 10;
     public int height = 10;
     public float cellSize = 1f;
     public Vector3 originPosition = Vector3.zero;
     public Grid grid;
+    public ObstacleGridEditor obstacleGridEditor; // Assign in Inspector
 
     private Vector2Int? startCell = null;
     private Vector2Int? endCell = null;
     private List<Vector2Int> currentPath = null;
 
+
+    void OnEnable()
+    {
+        if (grid == null)
+            grid = new Grid(width, height, cellSize, originPosition);
+        if (startCell == null)
+            startCell = new Vector2Int(0, 0);
+    }
+
     void Start()
     {
-        grid = new Grid(width, height, cellSize, originPosition);
-        startCell = new Vector2Int(0, 0);
+        if (grid == null)
+            grid = new Grid(width, height, cellSize, originPosition);
+        if (startCell == null)
+            startCell = new Vector2Int(0, 0);
     }
 
     void Update()
@@ -31,6 +45,11 @@ public class PathFinding : MonoBehaviour
             {
                 endCell = new Vector2Int(x, y);
                 currentPath = FindPath(startCell.Value, endCell.Value);
+                if (chefMover != null && currentPath != null && currentPath.Count > 1)
+                {
+                    chefMover.MoveAlongPath(currentPath, gridToWorld);
+                    startCell = endCell; // update start for next move
+                }
             }
         }
 
@@ -123,7 +142,12 @@ public class PathFinding : MonoBehaviour
             {
                 if (closed.Contains(neighborPos)) continue;
                 // Skip if not walkable (obstacle)
-                if (grid.GetValue(neighborPos.x, neighborPos.y) != 0) continue;
+                bool isObstacle = false;
+                if (obstacleGridEditor != null && obstacleGridEditor.obstacleCells.Contains(neighborPos))
+                    isObstacle = true;
+                if (grid.GetValue(neighborPos.x, neighborPos.y) != 0)
+                    isObstacle = true;
+                if (isObstacle) continue;
                 Node neighborNode = GetOrCreate(neighborPos);
                 int tentativeG = current.gCost + moveCost;
                 if (tentativeG < neighborNode.gCost || !open.Contains(neighborNode))
@@ -158,37 +182,50 @@ public class PathFinding : MonoBehaviour
                     int adj1y = pos.y;
                     int adj2x = pos.x;
                     int adj2y = pos.y + dy[i];
-                    if (grid.GetValue(adj1x, adj1y) != 0 || grid.GetValue(adj2x, adj2y) != 0)
+                    bool adj1Obstacle = (grid.GetValue(adj1x, adj1y) != 0);
+                    bool adj2Obstacle = (grid.GetValue(adj2x, adj2y) != 0);
+                    if (obstacleGridEditor != null)
+                    {
+                        if (obstacleGridEditor.obstacleCells.Contains(new Vector2Int(adj1x, adj1y))) adj1Obstacle = true;
+                        if (obstacleGridEditor.obstacleCells.Contains(new Vector2Int(adj2x, adj2y))) adj2Obstacle = true;
+                    }
+                    if (adj1Obstacle || adj2Obstacle)
                         continue;
                 }
+                bool isObstacle = false;
+                if (obstacleGridEditor != null && obstacleGridEditor.obstacleCells.Contains(new Vector2Int(nx, ny)))
+                    isObstacle = true;
+                if (grid.GetValue(nx, ny) != 0)
+                    isObstacle = true;
+                if (isObstacle) continue;
                 int cost = (i < 4) ? 10 : 14;
                 yield return (new Vector2Int(nx, ny), cost);
             }
         }
     }
-// SimplePriorityQueue implementation (min-heap for A*)
-public class SimplePriorityQueue<T>
-{
-    private List<(T item, float priority)> elements = new List<(T, float)>();
-    public int Count => elements.Count;
-    public void Enqueue(T item, float priority) => elements.Add((item, priority));
-    public T Dequeue()
+    // SimplePriorityQueue implementation (min-heap for A*)
+    public class SimplePriorityQueue<T>
     {
-        int bestIndex = 0;
-        for (int i = 1; i < elements.Count; i++)
-            if (elements[i].priority < elements[bestIndex].priority) bestIndex = i;
-        T bestItem = elements[bestIndex].item;
-        elements.RemoveAt(bestIndex);
-        return bestItem;
+        private List<(T item, float priority)> elements = new List<(T, float)>();
+        public int Count => elements.Count;
+        public void Enqueue(T item, float priority) => elements.Add((item, priority));
+        public T Dequeue()
+        {
+            int bestIndex = 0;
+            for (int i = 1; i < elements.Count; i++)
+                if (elements[i].priority < elements[bestIndex].priority) bestIndex = i;
+            T bestItem = elements[bestIndex].item;
+            elements.RemoveAt(bestIndex);
+            return bestItem;
+        }
+        public bool Contains(T item) => elements.Exists(e => EqualityComparer<T>.Default.Equals(e.item, item));
+        public void UpdatePriority(T item, float newPriority)
+        {
+            for (int i = 0; i < elements.Count; i++)
+                if (EqualityComparer<T>.Default.Equals(elements[i].item, item))
+                    elements[i] = (item, newPriority);
+        }
     }
-    public bool Contains(T item) => elements.Exists(e => EqualityComparer<T>.Default.Equals(e.item, item));
-    public void UpdatePriority(T item, float newPriority)
-    {
-        for (int i = 0; i < elements.Count; i++)
-            if (EqualityComparer<T>.Default.Equals(elements[i].item, item))
-                elements[i] = (item, newPriority);
-    }
-}
 
     int Heuristic(Vector2Int a, Vector2Int b)
     {

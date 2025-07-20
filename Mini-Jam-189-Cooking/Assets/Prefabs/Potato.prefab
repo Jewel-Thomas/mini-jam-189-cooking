@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7999891774357307655}
   - component: {fileID: 6745462215354255781}
-  - component: {fileID: 2151381042942192685}
   - component: {fileID: -7271798120375547634}
+  - component: {fileID: 4680463607587239420}
   m_Layer: 0
   m_Name: Potato
   m_TagString: Untagged
@@ -89,19 +89,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2151381042942192685
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5876654441926978456}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae05e303dd643a5478235049c0fd9572, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ingredientName: Potato
 --- !u!50 &-7271798120375547634
 Rigidbody2D:
   serializedVersion: 5
@@ -110,7 +97,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5876654441926978456}
-  m_BodyType: 0
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -129,3 +116,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &4680463607587239420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5876654441926978456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce665f2c09af8804f99aafa3a6a34d10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  decayTime: 50

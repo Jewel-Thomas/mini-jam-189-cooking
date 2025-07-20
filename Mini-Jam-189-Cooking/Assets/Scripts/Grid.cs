@@ -5,10 +5,10 @@ using CodeMonkey.Utils;
 
 public class Grid
 {
-    private int width;
-    private int height;
-    private float cellSize;
-    private Vector3 originPosition;
+    public int width;
+    public int height;
+    public float cellSize;
+    public Vector3 originPosition;
     private int[,] gridArray;
     private TextMesh[,] debugTextArray;
     public Grid(int width, int height, float cellSize, Vector3 originPosition)
@@ -24,7 +24,7 @@ public class Grid
         {
             for (int y = 0; y < gridArray.GetLength(1); y++)
             {
-                debugTextArray[x, y] = UtilsClass.CreateWorldText(gridArray[x, y].ToString(), null, GetWorldPosition(x, y) + new Vector3(cellSize, cellSize) * 0.5f, 20, Color.white, TextAnchor.MiddleCenter);
+                // debugTextArray[x, y] = UtilsClass.CreateWorldText(gridArray[x, y].ToString(), null, GetWorldPosition(x, y) + new Vector3(cellSize, cellSize) * 0.5f, 20, Color.white, TextAnchor.MiddleCenter);
                 Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x, y + 1), Color.white, 100f);
                 Debug.DrawLine(GetWorldPosition(x, y), GetWorldPosition(x + 1, y), Color.white, 100f);
             }
@@ -32,7 +32,6 @@ public class Grid
             Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), Color.white, 100f);
         }
 
-        SetValue(0, 0, 76);
     }
 
     private bool CheckBounds(int x, int y)
