@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DishManager : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class DishManager : MonoBehaviour
     public void SubmitDish()
     {
         bool success = requiredIngredients.OrderBy(i => i).SequenceEqual(currentIngredients.OrderBy(i => i));
+        Debug.Log(success ? "Dish prepared successfully!" : "Dish is incorrect!");
         GameManager.Instance.EndRound(success);
         ResetDish();
     }

@@ -15,6 +15,7 @@ public class PathFinding : MonoBehaviour
     private Vector2Int? startCell = null;
     private Vector2Int? endCell = null;
     private List<Vector2Int> currentPath = null;
+    private bool chefIsMoving = false;
 
 
     void OnEnable()
@@ -36,7 +37,7 @@ public class PathFinding : MonoBehaviour
     void Update()
     {
         // Left click: set end and find path
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !chefIsMoving)
         {
             Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mouseWorld.z = 0;
@@ -47,8 +48,8 @@ public class PathFinding : MonoBehaviour
                 currentPath = FindPath(startCell.Value, endCell.Value);
                 if (chefMover != null && currentPath != null && currentPath.Count > 1)
                 {
-                    chefMover.MoveAlongPath(currentPath, gridToWorld);
-                    startCell = endCell; // update start for next move
+                    chefIsMoving = true;
+                    chefMover.MoveAlongPath(currentPath, gridToWorld, OnChefArrived);
                 }
             }
         }
@@ -78,6 +79,13 @@ public class PathFinding : MonoBehaviour
                 Debug.DrawLine(a, b, Color.green);
             }
         }
+    }
+
+    // Callback for when chef finishes moving
+    private void OnChefArrived()
+    {
+        chefIsMoving = false;
+        startCell = endCell; // update start for next move
     }
 
     // Helper to get debug text for a cell

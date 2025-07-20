@@ -66,7 +66,12 @@ public class IngredientManager : MonoBehaviour
         GameObject ingredient = SelectRandomIngredient();
         Vector3 targetPosition = pathFinding.gridToWorld(cell);
         GameObject obj = Instantiate(ingredient, spawnPosition.position, Quaternion.identity);
-        obj.transform.DOMove(targetPosition, moveAnimationSpeed).SetEase(Ease.OutQuad);
+        Ingredient ingredientScript = obj.GetComponent<Ingredient>();
+        if (ingredientScript != null)
+        {
+            ingredientScript.gridCell = cell;
+        }
+        obj.transform.DOMove(targetPosition + new Vector3(0, -1, 0), moveAnimationSpeed).SetEase(Ease.OutQuad);
         Debug.Log("Total Occupied Cells : " + occupiedCells.Count);
     }
 

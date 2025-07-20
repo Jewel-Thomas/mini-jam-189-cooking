@@ -6,6 +6,7 @@ public class Timer : MonoBehaviour
     public float timeLeft;
     public bool isRunning = false;
     public TextMeshProUGUI timerText;
+    private System.Action onTimerEnd;
 
     void Update()
     {
@@ -17,18 +18,20 @@ public class Timer : MonoBehaviour
         if (timeLeft <= 0)
         {
             isRunning = false;
-            GameManager.Instance.EndRound(false); // Round failed
+            onTimerEnd?.Invoke();
         }
     }
 
-    public void StartTimer(float duration)
+    public void StartTimer(float duration, System.Action onEnd = null)
     {
         timeLeft = duration;
         isRunning = true;
+        onTimerEnd = onEnd;
     }
 
     public void StopTimer()
     {
         isRunning = false;
+        onTimerEnd = null;
     }
 }

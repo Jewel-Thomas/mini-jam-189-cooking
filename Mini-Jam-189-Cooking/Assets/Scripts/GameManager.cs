@@ -6,8 +6,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public int currentHour = 9;
+    public int currentHour = 10; // Start at 10 AM
     public TextMeshProUGUI timeDisplay;
+    public float roundDuration = 10f;
     public Timer roundTimer;
     public DishManager dishManager;
     public MrClock mrClock;
@@ -22,12 +23,18 @@ public class GameManager : MonoBehaviour
         StartNewRound();
     }
 
+
     public void StartNewRound()
     {
         List<string> newDish = DishDatabase.GetRandomDish();
         dishManager.SetNewDish(newDish);
-        mrClock.ThrowIngredients(newDish);
-        roundTimer.StartTimer(10f); // e.g., 10 seconds for each round
+        roundTimer.StartTimer(roundDuration, OnRoundTimerEnd);
+    }
+
+    // Called when the round timer runs out
+    private void OnRoundTimerEnd()
+    {
+        EndRound(false); // Failed to assemble dish in time
     }
 
     public void EndRound(bool success)
@@ -36,8 +43,8 @@ public class GameManager : MonoBehaviour
         currentHour += success ? 1 : -1;
         UpdateTimeDisplay();
 
-        if (currentHour >= 17) WinGame();
-        else if (currentHour < 9) LoseGame();
+        if (currentHour >= 19) WinGame();
+        else if (currentHour < 10) LoseGame();
         else Invoke(nameof(StartNewRound), 1.5f);
     }
 
@@ -48,4 +55,10 @@ public class GameManager : MonoBehaviour
 
     void WinGame() { /* Show win screen */ }
     void LoseGame() { /* Show lose screen */ }
+
+    // Call this from DishManager when dish is assembled successfully
+    public void OnDishAssembled()
+    {
+        EndRound(true);
+    }
 }
