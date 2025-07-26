@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     public Timer roundTimer;
     public DishManager dishManager;
     public MrClock mrClock;
+    public GameObject winPanel;
+    public GameObject losePanel;
 
     private void Awake()
     {
@@ -45,10 +47,6 @@ public class GameManager : MonoBehaviour
         currentHour += success ? 1 : -1;
         UpdateTimeDisplay();
 
-        // Remove immediate reset here
-        // dishManager.ResetDish();
-        // roundTimer.SetTime(roundDuration);
-
         if (currentHour >= 19) WinGame();
         else if (currentHour < 10) LoseGame();
         else Invoke(nameof(StartNewRound), 1.5f);
@@ -59,8 +57,26 @@ public class GameManager : MonoBehaviour
         timeDisplay.text = "Day Hour : " + currentHour + ":00";
     }
 
-    void WinGame() { /* Show win screen */ }
-    void LoseGame() { /* Show lose screen */ }
+    void WinGame()
+    {
+        Time.timeScale = 0; // Pause the game
+        winPanel.SetActive(true); // Show win panel
+    }
+    void LoseGame()
+    { 
+        Time.timeScale = 0; // Pause the game
+        losePanel.SetActive(true); // Show lose panel    
+    }
+
+    public void RetartGame()
+    {
+        Time.timeScale = 1; // Resume game time
+        winPanel.SetActive(false);
+        losePanel.SetActive(false);
+        currentHour = 10; // Reset to 10 AM
+        UpdateTimeDisplay();
+        StartNewRound();
+    }    
 
     // Call this from DishManager when dish is assembled successfully
     public void OnDishAssembled()
