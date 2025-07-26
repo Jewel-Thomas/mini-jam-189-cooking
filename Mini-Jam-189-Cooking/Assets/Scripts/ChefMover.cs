@@ -27,6 +27,7 @@ public class ChefMover : MonoBehaviour
                 Ingredient[] allIngredients = FindObjectsByType<Ingredient>(FindObjectsSortMode.None);
                 foreach (var ingredient in allIngredients)
                 {
+                    Debug.Log("Checking ingredient at cell: " + ingredient.gridCell + " against target cell: " + targetCell);
                     if (ingredient.gridCell == targetCell)
                     {
                         ingredient.Collect();

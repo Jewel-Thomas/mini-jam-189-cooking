@@ -4851,9 +4851,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b406d6190d38fd949aa07844baceddb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentHour: 9
+  currentHour: 10
   timeDisplay: {fileID: 403057417}
-  roundDuration: 20
+  roundDuration: 180
   roundTimer: {fileID: 409728139}
   dishManager: {fileID: 15297090}
   mrClock: {fileID: 1778395317}
@@ -4884,9 +4884,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52f11808961dbb84282601dc2b7e0ccd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 20
-  height: 11
-  cellSize: 3.5
+  width: 0
+  height: 0
+  cellSize: 0
   originPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &1481321325
 MonoBehaviour:
@@ -4930,7 +4930,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1481321321}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1c3fc8d536389d64a99633c2e1bae256, type: 3}
   m_Name: 
@@ -4938,6 +4938,43 @@ MonoBehaviour:
   pathFinding: {fileID: 1481321325}
   ingredientManager: {fileID: 170859317}
   obstacleCells:
+  - {x: 1, y: 0}
+  - {x: 1, y: 1}
+  - {x: 1, y: 2}
+  - {x: 2, y: 2}
+  - {x: 2, y: 1}
+  - {x: 2, y: 0}
+  - {x: 3, y: 0}
+  - {x: 3, y: 1}
+  - {x: 3, y: 2}
+  - {x: 5, y: 0}
+  - {x: 5, y: 1}
+  - {x: 9, y: 0}
+  - {x: 9, y: 1}
+  - {x: 9, y: 2}
+  - {x: 9, y: 3}
+  - {x: 9, y: 4}
+  - {x: 9, y: 5}
+  - {x: 10, y: 4}
+  - {x: 11, y: 4}
+  - {x: 12, y: 4}
+  - {x: 13, y: 4}
+  - {x: 14, y: 4}
+  - {x: 15, y: 4}
+  - {x: 16, y: 4}
+  - {x: 13, y: 1}
+  - {x: 14, y: 1}
+  - {x: 15, y: 1}
+  - {x: 16, y: 1}
+  - {x: 17, y: 1}
+  - {x: 18, y: 1}
+  - {x: 19, y: 1}
+  - {x: 19, y: 2}
+  - {x: 17, y: 6}
+  - {x: 18, y: 6}
+  - {x: 19, y: 6}
+  - {x: 20, y: 6}
+  - {x: 21, y: 6}
   - {x: 0, y: 10}
   - {x: 1, y: 10}
   - {x: 2, y: 10}
@@ -4947,44 +4984,7 @@ MonoBehaviour:
   - {x: 6, y: 10}
   - {x: 7, y: 10}
   - {x: 8, y: 10}
-  - {x: 5, y: 1}
-  - {x: 5, y: 0}
-  - {x: 10, y: 4}
-  - {x: 11, y: 4}
-  - {x: 12, y: 4}
-  - {x: 13, y: 4}
-  - {x: 14, y: 4}
-  - {x: 15, y: 4}
-  - {x: 16, y: 4}
-  - {x: 2, y: 2}
-  - {x: 3, y: 2}
-  - {x: 1, y: 2}
-  - {x: 3, y: 1}
-  - {x: 3, y: 0}
-  - {x: 2, y: 0}
-  - {x: 2, y: 1}
-  - {x: 1, y: 1}
-  - {x: 9, y: 5}
-  - {x: 9, y: 4}
-  - {x: 9, y: 3}
-  - {x: 9, y: 2}
-  - {x: 9, y: 1}
-  - {x: 9, y: 0}
-  - {x: 17, y: 6}
-  - {x: 18, y: 6}
-  - {x: 19, y: 6}
-  - {x: 20, y: 6}
-  - {x: 21, y: 6}
-  - {x: 19, y: 2}
-  - {x: 19, y: 1}
-  - {x: 18, y: 1}
-  - {x: 17, y: 1}
-  - {x: 16, y: 1}
-  - {x: 15, y: 1}
-  - {x: 14, y: 1}
-  - {x: 13, y: 1}
-  - {x: 1, y: 0}
-  obstacleColor: {r: 1, g: 0.14694063, b: 0, a: 1}
+  obstacleColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &1571434397
 GameObject:
   m_ObjectHideFlags: 0
@@ -5455,12 +5455,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c06838ee1cf96c14f9201b3481b43467, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ingredientPrefabs:
-  - {fileID: 5876654441926978456, guid: 909e115c11bdca04a8230818e35c5ae3, type: 3}
-  - {fileID: 5282732127807152290, guid: 71534e6e615d09e4ba3111aa5c2be0ac, type: 3}
-  - {fileID: 5875063459105223712, guid: 762b13cb72ed96d479b2391f5a3d117b, type: 3}
-  throwPoint: {fileID: 1325117106}
-  chefTarget: {fileID: 524477039}
+  ingredientPrefabs: []
+  throwPoint: {fileID: 0}
+  chefTarget: {fileID: 0}
   throwForce: 7
 --- !u!1 &1840731705
 GameObject:

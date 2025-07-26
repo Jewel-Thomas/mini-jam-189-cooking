@@ -30,20 +30,23 @@ public class DishManager : MonoBehaviour
         }
         // Enable submit button only if all required ingredients are collected
         if (submitButton != null)
-            submitButton.interactable = currentIngredients.Count == requiredIngredients.Count;
+        {
+            bool isallIngredientPresent = requiredIngredients.All(item => currentIngredients.Contains(item));
+            submitButton.interactable = isallIngredientPresent;
+        }
     }
 
     public void SubmitDish()
     {
-        bool success = requiredIngredients.OrderBy(i => i).SequenceEqual(currentIngredients.OrderBy(i => i));
-        Debug.Log(success ? "Dish prepared successfully!" : "Dish is incorrect!");
-        GameManager.Instance.EndRound(success);
+        Debug.Log("Dish prepared successfully!");
+        GameManager.Instance.EndRound(true); 
         ResetDish();
     }
 
     public void SetNewDish(List<string> ingredients)
     {
         requiredIngredients = ingredients;
+        ingredientManager.SetRequiredIngredients(ingredients);
         currentIngredients.Clear();
 
         // Clear previous buttons

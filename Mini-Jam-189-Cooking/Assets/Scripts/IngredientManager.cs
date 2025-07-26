@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Unity.VisualScripting;
 
 public class IngredientManager : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class IngredientManager : MonoBehaviour
     public Transform spawnPosition;
     public string ingredientName;
     public float moveAnimationSpeed = 0.7f;
+    // For Testing
+    public DishManager dishManager;
+    public List<string> requiredIngredients;
 
 
     // Track occupied ingredient cells (not obstacles)
@@ -23,12 +27,26 @@ public class IngredientManager : MonoBehaviour
     {
         // Do not assign obstacleCells to occupiedCells; keep them separate
         InvokeRepeating(nameof(ScheduledSpawn), 5f, 5f);
+        requiredIngredients = dishManager.requiredIngredients;
+    }
+
+    public void SetRequiredIngredients(List<string> newIngredients)
+    {
+        requiredIngredients = newIngredients;
     }
 
     GameObject SelectRandomIngredient()
     {
-        int randomIndex = Random.Range(0, incredientPrefabs.Count);
-        GameObject selectedPrefab = incredientPrefabs[randomIndex];
+        int randomPlausibleIngrediantName = Random.Range(0, requiredIngredients.Count);
+        GameObject selectedPrefab = null;
+        foreach (var prefav in incredientPrefabs)
+        {
+            if (prefav.name == requiredIngredients[randomPlausibleIngrediantName])
+            {
+                selectedPrefab = prefav;
+                break;
+            }
+        }
         return selectedPrefab;
     }
 
